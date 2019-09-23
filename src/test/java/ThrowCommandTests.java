@@ -1,20 +1,21 @@
 import org.improving.tag.commands.LookCommand;
+import org.improving.tag.commands.ThrowCommand;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class LookCommandTests {
+public class ThrowCommandTests {
 
-    LookCommand target;
+    ThrowCommand target;
     TestInputOutput io;
 
     @BeforeEach
     public void arrange() {
         //Arrange
         io = new TestInputOutput();
-        target = new LookCommand(io);
+        target = new ThrowCommand(io);
     }
 
     @Test
@@ -23,13 +24,13 @@ public class LookCommandTests {
         target.execute(null);
 
         //Assert
-        assertEquals("You look around", io.lastText);
+        assertEquals("You threw it far", io.lastText);
     }
 
     @Test
     public void isValid_should_be_true_when_input_is_look() {
         //Act
-        var result = target.isValid("look");
+        var result = target.isValid("throw");
 
         //Assert
         assertTrue(result);
@@ -53,19 +54,18 @@ public class LookCommandTests {
     }
 
     @Test
-    public void isValid_should_be_true_when_input_is_look_with_spaces() {
+    public void isValid_should_be_true_when_input_is_throw_with_spaces() {
         //Act
-        var result = target.isValid("  look ");
+        var result = target.isValid("  throw ");
 
         //Assert
         assertTrue(result);
     }
     @Test
-    public void isValid_should_be_true_when_input_is_look_with_caps() {
+    public void isValid_should_be_true_when_input_is_throw_with_caps() {
         //Act
-        var result = target.isValid("Look");
+        var result = target.isValid("THRow");
 
         //Assert
         assertTrue(result);
-    }
-}
+    }}

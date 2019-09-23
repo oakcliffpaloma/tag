@@ -1,20 +1,21 @@
 import org.improving.tag.commands.LookCommand;
+import org.improving.tag.commands.SearchCommand;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class LookCommandTests {
+public class SearchCommandTests {
 
-    LookCommand target;
+    SearchCommand target;
     TestInputOutput io;
 
     @BeforeEach
     public void arrange() {
         //Arrange
         io = new TestInputOutput();
-        target = new LookCommand(io);
+        target = new SearchCommand(io);
     }
 
     @Test
@@ -23,13 +24,13 @@ public class LookCommandTests {
         target.execute(null);
 
         //Assert
-        assertEquals("You look around", io.lastText);
+        assertEquals("You found a treasure", io.lastText);
     }
 
     @Test
-    public void isValid_should_be_true_when_input_is_look() {
+    public void isValid_should_be_true_when_input_is_search() {
         //Act
-        var result = target.isValid("look");
+        var result = target.isValid("search");
 
         //Assert
         assertTrue(result);
@@ -53,17 +54,17 @@ public class LookCommandTests {
     }
 
     @Test
-    public void isValid_should_be_true_when_input_is_look_with_spaces() {
+    public void isValid_should_be_true_when_input_is_search_with_spaces() {
         //Act
-        var result = target.isValid("  look ");
+        var result = target.isValid("  search ");
 
         //Assert
         assertTrue(result);
     }
     @Test
-    public void isValid_should_be_true_when_input_is_look_with_caps() {
+    public void isValid_should_be_true_when_input_is_search_with_caps() {
         //Act
-        var result = target.isValid("Look");
+        var result = target.isValid("SEArch");
 
         //Assert
         assertTrue(result);
