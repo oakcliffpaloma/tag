@@ -5,10 +5,10 @@ import org.improving.tag.InputOutput;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MoveCommand implements Command {
+public class SetNameCommand implements Command{
     private InputOutput io;
 
-    public MoveCommand(InputOutput io){
+    public SetNameCommand(InputOutput io){
         this.io = io;
     }
 
@@ -16,15 +16,17 @@ public class MoveCommand implements Command {
     public boolean isValid(String input, Game game) {
         if (input == null) return false;
         input = input.trim();
-        var parts = input.split(" ");
+        if (!(input.contains("="))) return false;
+        var parts = input.split("=");
         if (parts.length == 1) return false;
-        return parts[0].equalsIgnoreCase("move");
+        return parts[0].equalsIgnoreCase("@set name");
     }
 
     @Override
     public void execute(String input, Game game) {
         input = input.trim();
-        var destination = input.substring(5);
-        io.displayText("You proceed " + destination + ".");
+        var newName = input.split("=");
+        game.getPlayer().setName(newName[1]);
+        io.displayText("Your name is now " + game.getPlayer().getName() + ".");
     }
 }

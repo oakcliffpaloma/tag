@@ -21,7 +21,7 @@ public class SearchCommandTests {
     @Test
     public void execute_should_return_phrase(){
         //Act
-        target.execute(null);
+        target.execute(null, null);
 
         //Assert
         assertEquals("You found a treasure", io.lastText);
@@ -30,7 +30,7 @@ public class SearchCommandTests {
     @Test
     public void isValid_should_be_true_when_input_is_search() {
         //Act
-        var result = target.isValid("search");
+        var result = target.isValid("search", null);
 
         //Assert
         assertTrue(result);
@@ -39,7 +39,7 @@ public class SearchCommandTests {
     @Test
     public void isValid_should_be_false_when_input_foobar() {
         //Act
-        var result = target.isValid("foobar");
+        var result = target.isValid("foobar", null);
 
         //Assert
         assertFalse(result);
@@ -47,7 +47,7 @@ public class SearchCommandTests {
     @Test
     public void isValid_should_be_false_when_input_is_null() {
         //Act
-        var result = target.isValid( null);
+        var result = target.isValid( null, null);
 
         //Assert
         assertFalse(result);
@@ -56,7 +56,7 @@ public class SearchCommandTests {
     @Test
     public void isValid_should_be_true_when_input_is_search_with_spaces() {
         //Act
-        var result = target.isValid("  search ");
+        var result = target.isValid("  search ", null);
 
         //Assert
         assertTrue(result);
@@ -64,7 +64,7 @@ public class SearchCommandTests {
     @Test
     public void isValid_should_be_true_when_input_is_search_with_caps() {
         //Act
-        var result = target.isValid("SEArch");
+        var result = target.isValid("SEArch", null);
 
         //Assert
         assertTrue(result);
