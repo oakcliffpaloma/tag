@@ -1,10 +1,13 @@
+import org.improving.tag.Game;
 import org.improving.tag.commands.LookCommand;
 import org.improving.tag.commands.SearchCommand;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.configuration.IMockitoConfiguration;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
 
 public class SearchCommandTests {
 
