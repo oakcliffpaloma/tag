@@ -14,13 +14,15 @@ public class Game {
     private InputOutput io;
     private Player p;
     private Location startingLocation;
+    private final SaveGameFactory saveFactory;
 
 
-    public Game(Command[] commands, InputOutput io) {
+    public Game(Command[] commands, InputOutput io, SaveGameFactory saveFactory) {
         startingLocation = buildWorld();
         this.commands = commands;
         this.io = io;
         this.p = new Player(startingLocation);
+        this.saveFactory = saveFactory;
     }
 
     public Location getStartingLocation() {
@@ -58,6 +60,7 @@ public class Game {
             if (null != validCommand) {
                 validCommand.execute(input, this);
             } else if (input.equalsIgnoreCase("exit")) {
+                saveFactory.save(this);
                     io.displayText("Goodbye.");
                     loop = false;
                 } else {
