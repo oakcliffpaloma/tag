@@ -22,12 +22,20 @@ public class MoveCommand implements Command {
         return parts[0].equalsIgnoreCase("move");
     }
 
+
+
     @Override
     public void execute(String input, Game game) {
         input = input.trim();
         var destination = input.substring(5);
 
+
         Exit exit = null;
+        if (game.getPlayer().getLocation().getAdversary() != null) {
+            io.displayText("You Shall Not Pass!");
+            return;
+        }
+
         for (var e : game.getPlayer().getLocation().getExits()) {
             if (e.getName().equalsIgnoreCase(destination)) {
                 exit = e;
