@@ -35,7 +35,7 @@ public class AttackCommand implements Command{
             if (Random <=20) {
                 adversary.setDamageTaken(adversary.getDamageTaken() + 10);
                 adversary.setHitPoints(adversary.getHitPoints() - 10);
-                io.displayText("Your remaining points are" + adversary.getHitPoints());
+                io.displayText("Your remaining points are " + adversary.getHitPoints());
 
             }else {
                 io.displayText("You Missed!");
