@@ -7,6 +7,12 @@ public class Adversary {
     private int damageTaken;
     private int attackDamage;
 
+    public Adversary(String name) {
+        this.name = name;
+        this.hitPoints = 100;
+        this.damageTaken = 0;
+        this.attackDamage = 1;
+    }
 
     public String getName() {
         return name;
