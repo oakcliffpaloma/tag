@@ -9,7 +9,7 @@ public class Adversary {
 
     public Adversary(String name) {
         this.name = name;
-        this.hitPoints = 100;
+        this.hitPoints = 30;
         this.damageTaken = 0;
         this.attackDamage = 1;
     }

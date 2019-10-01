@@ -6,4 +6,6 @@ public interface InputOutput {
     void displayText(String text);
 
     void displayPrompt(String prompt);
+
+    void displayNewLine();
 }

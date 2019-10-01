@@ -15,6 +15,9 @@ public class TestInputOutput implements InputOutput {
 
     @Override
     public void displayPrompt(String prompt) {
+    }
 
+    @Override
+    public void displayNewLine() {
     }
 }
