@@ -5,7 +5,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class SearchCommand extends BaseEmoteCommand {
+    private InputOutput io;
+
     public SearchCommand(InputOutput io) {
-        super("search", "You found a treasure", io);
+        super("You found a treasure", io, "search", "srch");
     }
 }

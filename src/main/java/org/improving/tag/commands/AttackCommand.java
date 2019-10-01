@@ -42,5 +42,4 @@ public class AttackCommand implements Command{
             }
         }
     }
-
 }
