@@ -61,6 +61,16 @@ public class Location {
     return treasure;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Location) {
+            Location location  = (Location) obj;
+            return this.getName().equals(location.getName()) &&
+                    this.getDescription().equals(location.getDescription());
+        }
+        return super.equals(obj);
+    }
+
     /*public Item openTreasure() {
         if(TreasureChest.NO_TREASURE.equals(treasureChest)){
             throw new UnsupportedOperationException());}

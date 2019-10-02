@@ -1,6 +1,8 @@
 package org.improving.tag;
 
 import org.improving.tag.items.Item;
+import org.improving.tag.items.ItemComparator;
+import org.improving.tag.items.UniqueItems;
 
 import java.util.ArrayList;
 import java.util.List;
