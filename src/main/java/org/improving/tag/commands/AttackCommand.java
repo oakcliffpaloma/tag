@@ -1,6 +1,5 @@
 package org.improving.tag.commands;
 
-import org.improving.tag.Exit;
 import org.improving.tag.Game;
 import org.improving.tag.InputOutput;
 import org.springframework.stereotype.Component;
@@ -8,11 +7,12 @@ import org.springframework.stereotype.Component;
 import java.util.Random;
 
 @Component
-public class AttackCommand implements Command{
-   private InputOutput io;
+public class AttackCommand extends BaseAliasedCommand{
+   private final InputOutput io;
 
-    private AttackCommand(InputOutput io)
-    { this.io = io;
+    private AttackCommand(InputOutput io, InputOutput io1) {
+        super(io, "attack", "a", "at", "att", "atk");
+        this.io = io;
     }
 
     @Override
@@ -39,6 +39,13 @@ public class AttackCommand implements Command{
 
             }else {
                 io.displayText("You Missed!");
+            }
+            if (adversary.getHitPoints() == 0) {
+                var advLoot = adversary.getInventory().getItem();
+
+                io.displayText(adversary.getName() + " has been defeated! You acquired " + advLoot);
+                game.getPlayer().getInventory().addItem(advLoot);
+                game.getPlayer().getLocation().setAdversary(null);
             }
         }
     }

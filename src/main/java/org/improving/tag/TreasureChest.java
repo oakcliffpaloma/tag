@@ -8,7 +8,6 @@ public class TreasureChest {
     private final Item item;
     private final String description;
 
-
     public TreasureChest(Item item, String description) {
         this.item = item;
         this.description = description;

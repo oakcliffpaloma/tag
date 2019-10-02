@@ -139,6 +139,7 @@ public class Game {
         mtd.setName("Mount Doom");
         this.locationList.add(mtd);
         mtd.setAdversary(new Adversary("Sauron"));
+        mtd.getAdversary().getInventory().addItem(UniqueItems.LONGCLAW);
 
 
         var vod = new Location();
