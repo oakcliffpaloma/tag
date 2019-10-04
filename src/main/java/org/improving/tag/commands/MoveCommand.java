@@ -13,7 +13,7 @@ public class MoveCommand extends BaseAliasedCommand {
     private InputOutput io;
 
     public MoveCommand(InputOutput io){
-        super(io, "move", "mov", "mo");
+        super(io, "move", "mov", "mo", "m");
         this.io = io;
     }
 

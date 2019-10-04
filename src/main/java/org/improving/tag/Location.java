@@ -11,7 +11,7 @@ public class Location {
     private String description = "";
     private List<String> tags = new ArrayList<>();
     private List<Exit> exits = new ArrayList<>();
-    private Adversary adversary;
+    private Adversary adversary = null;
     private TreasureChest treasureChest = TreasureChest.NO_TREASURE;
 
     public Adversary getAdversary() {

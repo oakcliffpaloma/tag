@@ -24,23 +24,22 @@ public class AttackCommand extends BaseAliasedCommand{
     @Override
     public void execute(String input, Game game) {
         var adversary = game.getPlayer().getLocation().getAdversary();
-        var damage = adversary.getDamageTaken();
 
         if (adversary == null) {
             io.displayText("attack what?!");
         } else
             {    Random random  = new Random();
-            int Random  = random.nextInt(100);
-            Random += 1;
-            if (Random <=20) {
-                adversary.setDamageTaken(adversary.getDamageTaken() + 10);
-                adversary.setHitPoints(adversary.getHitPoints() - 10);
-                io.displayText("Your remaining points are " + adversary.getHitPoints());
-
-            }else {
+                int Random  = random.nextInt(100);
+                Random += 1;
+                if (Random <=20) {
+                    var damage = adversary.getDamageTaken();
+                    adversary.setDamageTaken(adversary.getDamageTaken() + 10);
+                    adversary.setHitPoints(adversary.getHitPoints() - 10);
+                    io.displayText("Your remaining points are " + adversary.getHitPoints());
+                }else {
                 io.displayText("You Missed!");
             }
-            if (adversary.getHitPoints() == 0) {
+            if (adversary.getHitPoints() <= 0) {
                 var advLoot = adversary.getInventory().getItem();
 
                 io.displayText(adversary.getName() + " has been defeated! You acquired " + advLoot);

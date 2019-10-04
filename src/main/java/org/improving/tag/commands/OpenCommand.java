@@ -23,15 +23,16 @@ public class OpenCommand extends BaseAliasedCommand {
 
 
 
-        //io.displayText("It is " + item.getDescription());
+    /*    io.displayText("It is " + item.getDescription());
 
-       /* var location = game.getPlayer().getLocation();
+       var location = game.getPlayer().getLocation();
         if (location.getTreasureDescription().equals("")) {
             io.displayText("You found nothing!");
         } else {
             io.displayText("You found: " + location.getTreasureChest().getItem().getDescription());
-        }*/
+        }
 
+    }*/
     }
 }
 

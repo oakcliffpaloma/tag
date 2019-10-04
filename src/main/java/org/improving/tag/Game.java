@@ -155,7 +155,7 @@ public class Game {
         tmcs.getExits().add(new Exit("Highway 121", ta, "121", "hwy", "hwy 121", "h121", "Highway 121"));
         tmcs.getExits().add(new Exit("Paradise Rd", tr, "paradise", "pd", "Paradise Rd"));
         tmcs.getExits().add(new Exit("Highway 21", vod, "h21", "21", "Highway 21"));
-        tr.getExits().add(new Exit("The Reef", tvm, "scenic", "sr", "scenic route", "The Reef"));
+        tr.getExits().add(new Exit("The Scenic Route", tvm, "scenic", "sr", "scenic route"));
         tr.getExits().add(new Exit("The City Walk", mall, "city", "city walk", "cw", "walk", "The City Walk"));
         tm.getExits().add(new Exit("Path to Doom", mtd, "path", "doom", "Path to Doom"));
         tm.getExits().add(new Exit("An Escalator of Doom", vod, "escalator", "ed", "An Escalator of Doom"));

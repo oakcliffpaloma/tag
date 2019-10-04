@@ -16,7 +16,7 @@ public class Adversary {
         this.name = name;
         this.hitPoints = 30;
         this.damageTaken = 0;
-        this.attackDamage = 1;
+        this.attackDamage = 10;
         this.inventory = new Inventory();
     }
 
