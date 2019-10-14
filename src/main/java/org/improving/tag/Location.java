@@ -3,16 +3,19 @@ package org.improving.tag;
 import org.improving.tag.items.Item;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class Location {
-    public Object get;
+    private int id;
     private String name = "";
     private String description = "";
     private List<String> tags = new ArrayList<>();
     private List<Exit> exits = new ArrayList<>();
-    private Adversary adversary = null;
+    private Adversary adversary;
     private TreasureChest treasureChest = TreasureChest.NO_TREASURE;
+   //private Collection<Exit> exit;
+
 
     public Adversary getAdversary() {
         return adversary;
@@ -69,6 +72,17 @@ public class Location {
                     this.getDescription().equals(location.getDescription());
         }
         return super.equals(obj);
+    }
+
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void addExit(Exit exit) {
+        this.exits.add(exit);
     }
 
     /*public Item openTreasure() {

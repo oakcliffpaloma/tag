@@ -35,16 +35,15 @@ public class AttackCommand extends BaseAliasedCommand{
                     var damage = adversary.getDamageTaken();
                     adversary.setDamageTaken(adversary.getDamageTaken() + 10);
                     adversary.setHitPoints(adversary.getHitPoints() - 10);
-                    io.displayText("Your remaining points are " + adversary.getHitPoints());
+                    io.displayText(adversary.getName() + " remaining points are " + adversary.getHitPoints());
                 }else {
                 io.displayText("You Missed!");
             }
             if (adversary.getHitPoints() <= 0) {
+                game.getPlayer().getLocation().setAdversary(null);
                 var advLoot = adversary.getInventory().getItem();
-
                 io.displayText(adversary.getName() + " has been defeated! You acquired " + advLoot);
                 game.getPlayer().getInventory().addItem(advLoot);
-                game.getPlayer().getLocation().setAdversary(null);
             }
         }
     }

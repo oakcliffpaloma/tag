@@ -3,21 +3,55 @@ package org.improving.tag;
 import org.improving.tag.items.Item;
 import org.improving.tag.items.UniqueItems;
 
+import javax.persistence.*;
+import java.util.Arrays;
+
+@Entity(name = "adversary")
 public class Adversary {
+    @Id
+    long id;
+
+    @Column(name = "Name")
     private String name;
+
     private int property;
+
+    @Column(name = "HitPoints")
     private int hitPoints;
+
+    @Column(name = "DamageTaken")
     private int damageTaken;
+
+    @Column(name = "AttackDamage")
     private int attackDamage;
+
+    @Transient
     private Inventory inventory;
+
+    @Column(name = "DropItem")
+    private String dropItemDb;
+
+
+    @Transient
+    private Item dropItem = UniqueItems.NOTHING;
+
+    public void setItem(Item item) {
+        this.item = item;
+    }
+
+    @Transient
     private Item item;
 
     public Adversary(String name) {
         this.name = name;
         this.hitPoints = 30;
-        this.damageTaken = 0;
-        this.attackDamage = 10;
+        this.damageTaken = 10;
+        this.attackDamage = 5;
         this.inventory = new Inventory();
+    }
+
+    public Adversary() {
+        
     }
 
     public String getName() {
@@ -27,6 +61,7 @@ public class Adversary {
     public void setName(String name) {
         this.name = name;
     }
+    
 
     public int getProperty() {
         return property;
@@ -62,5 +97,27 @@ public class Adversary {
 
     public Inventory getInventory() {
         return inventory;
+    }
+
+    public void setItem() {
+    }
+
+    public Item getDropItem() {
+        return dropItem;
+    }
+
+    public void setDropItem(Item dropItem) {
+        this.dropItem = dropItem;
+    }
+
+    @PostLoad
+    public void postLoad() {
+        //String dropItem = result.getString("DropItem");
+        if (null != dropItemDb) {
+            this.setItem(Arrays
+                    .stream(UniqueItems.values())
+                    .filter(item -> item.getName().equals(dropItemDb))
+                    .findFirst().orElse(null));
+        }
     }
 }

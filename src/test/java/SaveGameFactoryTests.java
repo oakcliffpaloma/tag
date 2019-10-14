@@ -1,6 +1,7 @@
 import org.improving.tag.FileSystemAdapter;
 import org.improving.tag.Game;
 import org.improving.tag.SaveGameFactory;
+import org.improving.tag.WorldBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -25,16 +26,17 @@ public class SaveGameFactoryTests {
         io = new TestInputOutput();
         fsa = mock(FileSystemAdapter.class);
         target = new SaveGameFactory(fsa, io);
-        g = new Game(null, io, target);
+        //g = new Game(null, io, target, new WorldBuilder(null));
+        g = new Game(null, io, target, new WorldBuilder(null, null));
     }
 
 @Test
     public void save_should_preserve_location_name() throws IOException {
     //Arrange
-    TestInputOutput io = new TestInputOutput();
+   /* TestInputOutput io = new TestInputOutput();
     FileSystemAdapter fsa = mock(FileSystemAdapter.class);
     SaveGameFactory target = new SaveGameFactory(fsa, io);
-    Game g = new Game(null, io, target);
+    Game g = new Game(null, io, target, new WorldBuilder(null));*/
     Class<Map<String, String>> dictClass =
             (Class<Map<String, String>>)(Class)Map.class;
     ArgumentCaptor<Map<String, String>> contentsCaptor =
@@ -59,7 +61,7 @@ public class SaveGameFactoryTests {
 @Test
 public void load_should_load_save_file() throws IOException {
     //Arrange
-    String path = "thisisiafakepath";
+    String path = "thisisafakepath";
 
     when (fsa.loadFile(path)).thenReturn(Map.of("location", "the Amazon"));
 

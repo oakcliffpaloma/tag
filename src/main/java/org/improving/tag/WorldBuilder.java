@@ -1,105 +1,57 @@
 package org.improving.tag;
 
-import org.improving.tag.commands.*;
+import org.improving.tag.database.ExitDAO;
+import org.improving.tag.database.LocationDAO;
 import org.improving.tag.items.UniqueItems;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Scanner;
 
 @Component
-public class Game {
-    private Date startTime;
-    private Date endTime;
-    private Command[] commands;
-    private InputOutput io;
-    private Player p;
-    private Location startingLocation;
+public class WorldBuilder {
     private List<Location> locationList = new ArrayList<>();
-    private final SaveGameFactory saveFactory;
 
 
-    public Game(Command[] commands, InputOutput io,
-                SaveGameFactory saveFactory, WorldBuilder worldBuilder) {
-        startingLocation = worldBuilder.buildWorld();
-        locationList = worldBuilder.getLocationList();
-        this.commands = commands;
-        this.io = io;
-        this.p = new Player(startingLocation);
-        this.saveFactory = saveFactory;
-    }
+    private List<Exit> exitList = new ArrayList<>();
 
-    public Location getStartingLocation() {
-        return startingLocation;
-    }
+    private final LocationDAO locationDAO;
 
-    public Player getPlayer() {
-        return p;
-    }
+    private final ExitDAO exitDAO;
 
-    public Date getStartTime() {
-        return startTime;
-    }
+    /*public WorldBuilder(ExitDAO exitDAO) {
+        this.exitDAO = exitDAO;
+    }*/
 
-    private void setStartTime(Date val) {
-        startTime = val;
-    }
-
-    public Date getEndTime() {
-        return endTime;
-    }
-
-    private void setEndTime(Date endTime) {
-        this.endTime = endTime;
+    public WorldBuilder(LocationDAO locationDAO, ExitDAO exitDAO) {
+        this.locationDAO = locationDAO;
+        this.exitDAO = exitDAO;
     }
 
 
-    public void run() {
-        this.setStartTime(new Date());
 
-        boolean loop = true;
-        while (loop) {
-            try {
-                io.displayPrompt("> ");
-                String input = io.receiveInput();
-
-                Command validCommand = getValidCommand(input);
-                if (null != validCommand) {
-                    validCommand.execute(input, this);
-                } else {
-                    io.displayText("Huh? I don't understand.");
-                }
-            } catch (GameExitException ex) {
-                loop = false;
+    public Location buildWorld () {
+        try {
+            List<Location>locations = locationDAO.findAll();
+            for (Location location : locations) {
+                List<Exit> exits = exitDAO.findByOriginId(location.getId());
+                exits.forEach(exit -> {
+                    Location destination = locations.stream()
+                            .filter(locat -> locat.getId() == exit.getDestinationId())
+                            .findFirst()
+                            .orElse(null);
+                    exit.setDestination(destination);
+                    location.addExit(exit);
+                });
             }
+            locationList = locations;
+            return locationList.get(0);
+        } catch (Exception e) {
+            return buildHardCodedWorld();
         }
-        this.setEndTime(new Date());
     }
 
-    private Command getValidCommand(String input) {
-        for (Command command : commands) {
-            if (command.isValid(input, this)) {
-                return command;
-            }
-        }
-        return null;
-    }
-
-
-    public Location getLocationOf(String intendedLocationName) {
-        for (Location location : locationList) {
-            if (intendedLocationName.equalsIgnoreCase(location.getName())) {
-                return location;
-            }
-        }
-        return null;
-    }
-
-
-    /*private Location buildWorld() {
+    private Location buildHardCodedWorld() {
         var tdh = new Location();
         tdh.setName("The Deathly Hallows");
         this.locationList.add(tdh);
@@ -187,8 +139,12 @@ public class Game {
         tm.getExits().add(new Exit("Bike Trail", tr, "bike", "bt", "b", "Bike Trail"));
 
         return tdh;
-    }*/
-
-
+    }
+    public List<Location> getLocationList() {
+        return locationList;
+    }
+    public List<Exit> getExitList() {
+        return exitList;
+    }
 
 }

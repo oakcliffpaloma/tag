@@ -1,13 +1,17 @@
 package org.improving.tag;
 
-import java.lang.reflect.Array;
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class Exit {
     private String name;
     private Location destination;
+    private int destinationId;
+
     private List<String> aliases = new ArrayList<>();
 
     public Exit() {}
@@ -17,8 +21,6 @@ public class Exit {
         this.destination = destination;
         this.aliases.addAll(Arrays.asList(aliases));
     }
-
-
     public String getName() {
         return name;
     }
@@ -30,18 +32,34 @@ public class Exit {
     public Location getDestination() {
         return destination;
     }
-
     public void setDestination(Location destination) {
         this.destination = destination;
+    }
+
+    public int getDestinationId() {
+        return destinationId;
+    }
+    public void setDestinationId(int destinationId) {
+        this.destinationId = destinationId;
     }
 
     public List<String> getAliases() {
         return aliases;
     }
 
+
+    public void addAlias(String alias) {
+        this.aliases.add(alias);
+    }
+
     @Override
     public String toString() {
         return this.getName();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, destination);
     }
 
     @Override
@@ -53,4 +71,5 @@ public class Exit {
         }
         return super.equals(obj);
     }
+
 }
