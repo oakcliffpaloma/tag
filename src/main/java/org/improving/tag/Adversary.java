@@ -1,10 +1,7 @@
 package org.improving.tag;
-
 import org.improving.tag.items.Item;
 import org.improving.tag.items.UniqueItems;
-
 import javax.persistence.*;
-import java.util.Arrays;
 
 @Entity(name = "adversary")
 public class Adversary {
@@ -28,12 +25,14 @@ public class Adversary {
     @Transient
     private Inventory inventory;
 
+    private UniqueItems uniqueItems;
+
     @Column(name = "DropItem")
     private String dropItemDb;
 
 
     @Transient
-    private Item dropItem = UniqueItems.NOTHING;
+    private Item dropItem = UniqueItems.LONGCLAW;
 
     public void setItem(Item item) {
         this.item = item;
@@ -51,7 +50,6 @@ public class Adversary {
     }
 
     public Adversary() {
-        
     }
 
     public String getName() {
@@ -110,14 +108,13 @@ public class Adversary {
         this.dropItem = dropItem;
     }
 
-    @PostLoad
+    /*@PostLoad
     public void postLoad() {
-        //String dropItem = result.getString("DropItem");
         if (null != dropItemDb) {
             this.setItem(Arrays
                     .stream(UniqueItems.values())
                     .filter(item -> item.getName().equals(dropItemDb))
                     .findFirst().orElse(null));
         }
-    }
+    }*/
 }

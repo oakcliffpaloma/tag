@@ -1,10 +1,11 @@
 package org.improving.tag;
 
-import org.improving.tag.database.ExitDAO;
-import org.improving.tag.database.LocationDAO;
+import org.improving.tag.database.ExitRepository;
+import org.improving.tag.database.LocationRepository;
 import org.improving.tag.items.UniqueItems;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,43 +13,30 @@ import java.util.List;
 public class WorldBuilder {
     private List<Location> locationList = new ArrayList<>();
 
+    LocationRepository locationRepo;
 
-    private List<Exit> exitList = new ArrayList<>();
+    ExitRepository exitRepo;
 
-    private final LocationDAO locationDAO;
 
-    private final ExitDAO exitDAO;
-
-    /*public WorldBuilder(ExitDAO exitDAO) {
-        this.exitDAO = exitDAO;
-    }*/
-
-    public WorldBuilder(LocationDAO locationDAO, ExitDAO exitDAO) {
-        this.locationDAO = locationDAO;
-        this.exitDAO = exitDAO;
+    public WorldBuilder(LocationRepository locationRepo, ExitRepository exitRepo) {
+        this.locationRepo = locationRepo;
+        this.exitRepo = exitRepo;
     }
 
+
+    @Transient
+    private List<Exit> exitList = new ArrayList<>();
 
 
     public Location buildWorld () {
         try {
-            List<Location>locations = locationDAO.findAll();
-            for (Location location : locations) {
-                List<Exit> exits = exitDAO.findByOriginId(location.getId());
-                exits.forEach(exit -> {
-                    Location destination = locations.stream()
-                            .filter(locat -> locat.getId() == exit.getDestinationId())
-                            .findFirst()
-                            .orElse(null);
-                    exit.setDestination(destination);
-                    location.addExit(exit);
-                });
-            }
+            List<Location>locations = locationRepo.findAll();
             locationList = locations;
-            return locationList.get(0);
+            return locationList.get(2);
         } catch (Exception e) {
-            return buildHardCodedWorld();
+            e.printStackTrace();
         }
+        return null;
     }
 
     private Location buildHardCodedWorld() {

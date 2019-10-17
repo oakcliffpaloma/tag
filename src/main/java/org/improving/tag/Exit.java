@@ -1,20 +1,30 @@
 package org.improving.tag;
-
-import org.springframework.stereotype.Component;
-
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+@Entity(name ="exits")
 public class Exit {
-    private String name;
-    private Location destination;
-    private int destinationId;
+    @Id
+    Long id;
 
+    @Column(name = "Name")
+    private String name;
+
+    @ManyToOne
+    @JoinColumn(name = "DestinationId")
+    private Location destination;
+
+
+    @ManyToOne
+    @JoinColumn(name = "OriginId")
+    private Location origin;
+
+    @Transient
     private List<String> aliases = new ArrayList<>();
 
-    public Exit() {}
 
     public Exit(String name, Location destination, String...aliases) {
         this.name = name;
@@ -23,6 +33,9 @@ public class Exit {
     }
     public String getName() {
         return name;
+    }
+
+    public Exit() {
     }
 
     public void setName(String name) {
@@ -36,12 +49,13 @@ public class Exit {
         this.destination = destination;
     }
 
-    public int getDestinationId() {
+    /*public int getDestinationId() {
         return destinationId;
     }
     public void setDestinationId(int destinationId) {
         this.destinationId = destinationId;
-    }
+    }*/
+
 
     public List<String> getAliases() {
         return aliases;
@@ -70,6 +84,24 @@ public class Exit {
                     this.getDestination().equals(exit.getDestination());
         }
         return super.equals(obj);
+    }
+
+    public Location getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(Location origin) {
+        this.origin = origin;
+    }
+
+    @Column(name = "Aliases")
+    private String pAliases;
+
+    @PostLoad
+    public void postLoad() {
+        if (null != pAliases) {
+            Arrays.stream(pAliases.replace(" ", "").split(",")).forEach(alias -> aliases.add(alias));
+        }
     }
 
 }

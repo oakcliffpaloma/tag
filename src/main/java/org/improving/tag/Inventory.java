@@ -30,9 +30,6 @@ public class Inventory {
             displayString += "\n" + item;
         }
         return displayString;
-    /*   return items.stream().sorted(new ItemComparator()).map(i -> "\n" +i)
-            .reduce(displayString, (answer, itemVale) -> answer+= itemVale);*/
-
     }
 
     public Item getItem() {

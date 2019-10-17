@@ -1,20 +1,41 @@
 package org.improving.tag;
-
 import org.improving.tag.items.Item;
-
+import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
+
+@Entity(name = "location")
 public class Location {
-    private int id;
+    @Id
+    long id;
+
+    @Column(name = "Name")
     private String name = "";
+
+    @Column(name = "Description")
     private String description = "";
-    private List<String> tags = new ArrayList<>();
+
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "origin")
     private List<Exit> exits = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "AdversaryId")
     private Adversary adversary;
+
+  /* @Column(name = "AdversaryId")
+    private Long adversaryId;
+
+    public Long getAdversaryId() {
+        return adversaryId;
+    }
+
+    public void setAdversaryId(Long adversaryId) {
+        this.adversaryId = adversaryId;
+    }*/
+
+    @Transient
     private TreasureChest treasureChest = TreasureChest.NO_TREASURE;
-   //private Collection<Exit> exit;
 
 
     public Adversary getAdversary() {
@@ -24,7 +45,6 @@ public class Location {
     public void setAdversary(Adversary adversary) {
         this.adversary = adversary;
     }
-
 
     public String getName() {
         return name;
@@ -42,9 +62,6 @@ public class Location {
         this.description = description;
     }
 
-    public List<String> getTags() {
-        return tags;
-    }
 
     public List<Exit> getExits() {
         return exits;
@@ -74,21 +91,15 @@ public class Location {
         return super.equals(obj);
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
     public void addExit(Exit exit) {
         this.exits.add(exit);
     }
-
-    /*public Item openTreasure() {
-        if(TreasureChest.NO_TREASURE.equals(treasureChest)){
-            throw new UnsupportedOperationException());}
-        return treasureChest.getItem();
-        }*/
 
 }
